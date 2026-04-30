@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import axios from "axios";
-import { Search, SlidersHorizontal, ArrowDownAZ, RotateCcw, Database, Sparkles, Building2 } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
+import { Search, SlidersHorizontal, ArrowDownAZ, RotateCcw, Database, Sparkles, Building2, Download } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import {
@@ -20,6 +21,9 @@ import ThemeToggle from "../components/ThemeToggle";
 import EmptyState from "../components/EmptyState";
 
 import useDebounce from "../hooks/useDebounce";
+import { downloadCsv } from "../lib/csv";
+import { filtersToParams, paramsToFilters } from "../lib/urlState";
+import { toast } from "sonner";
 
 const API = `${import.meta.env.VITE_BACKEND_URL || ""}/api`;
 const PAGE_SIZE = 12;
@@ -47,15 +51,17 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const [searchParams, setSearchParams] = useSearchParams();
     const [filters, setFilters] = useState(INITIAL_FILTERS);
     const [sort, setSort] = useState(SORTS[0].id);
     const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
     const [selected, setSelected] = useState(null);
+    const hydratedRef = useRef(false);
 
     const debouncedSearch = useDebounce(filters.search, 200);
     const sentinelRef = useRef(null);
 
-    // ----- Data fetching -----
+    // ----- Data fetching + URL hydration -----
     useEffect(() => {
         let mounted = true;
         (async () => {
@@ -68,28 +74,15 @@ export default function Dashboard() {
                 if (!mounted) return;
                 setItems(p.data?.data || []);
                 setFacets(f.data);
-                // Seed range filters with full extents.
-                setFilters((prev) => ({
-                    ...prev,
-                    ranges: {
-                        first_total_approved_amt: [
-                            f.data.ranges.first_total_approved_amt.min,
-                            f.data.ranges.first_total_approved_amt.max,
-                        ],
-                        reapply_total_approved_amt: [
-                            f.data.ranges.reapply_total_approved_amt.min,
-                            f.data.ranges.reapply_total_approved_amt.max,
-                        ],
-                        totalRemainingAmount: [
-                            f.data.ranges.totalRemainingAmount.min,
-                            f.data.ranges.totalRemainingAmount.max,
-                        ],
-                        totalGrantremainingAmount: [
-                            f.data.ranges.totalGrantremainingAmount.min,
-                            f.data.ranges.totalGrantremainingAmount.max,
-                        ],
-                    },
-                }));
+                // Hydrate filters from URL (or fall back to full extents).
+                const { filters: hydrated, sort: hydratedSort } = paramsToFilters({
+                    params: searchParams,
+                    facets: f.data,
+                    defaultSort: SORTS[0].id,
+                });
+                setFilters(hydrated);
+                setSort(hydratedSort);
+                hydratedRef.current = true;
             } catch (e) {
                 console.error(e);
                 if (mounted) setError("Could not load portfolio data. Please try again.");
@@ -100,7 +93,20 @@ export default function Dashboard() {
         return () => {
             mounted = false;
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    // ----- Sync filters/sort -> URL params -----
+    useEffect(() => {
+        if (!hydratedRef.current || !facets) return;
+        const next = filtersToParams({
+            filters,
+            sort,
+            defaultSort: SORTS[0].id,
+            facets,
+        });
+        setSearchParams(next, { replace: true });
+    }, [filters, sort, facets, setSearchParams]);
 
     // ----- Filtering & sorting (memoised) -----
     const filteredSorted = useMemo(() => {
@@ -200,6 +206,16 @@ export default function Dashboard() {
     const totalCount = items.length;
     const filteredCount = filteredSorted.length;
 
+    const exportCsv = useCallback(() => {
+        if (!filteredSorted.length) {
+            toast.error("Nothing to export — filters return zero rows.");
+            return;
+        }
+        const stamp = new Date().toISOString().slice(0, 10);
+        downloadCsv(filteredSorted, `seedfund-portfolio-${stamp}.csv`);
+        toast.success(`Exported ${filteredSorted.length} incubators to CSV`);
+    }, [filteredSorted]);
+
     return (
         <div className="min-h-screen bg-background text-foreground" data-testid="dashboard-root">
             {/* Sticky Header */}
@@ -244,6 +260,17 @@ export default function Dashboard() {
                             </SelectContent>
                         </Select>
                     </div>
+
+                    <Button
+                        variant="outline"
+                        onClick={exportCsv}
+                        className="hidden md:inline-flex h-10 gap-2"
+                        data-testid="export-csv-btn"
+                        title="Export current filtered view as CSV"
+                    >
+                        <Download className="h-4 w-4" />
+                        <span>Export</span>
+                    </Button>
 
                     {/* Mobile filter trigger */}
                     <Sheet>
