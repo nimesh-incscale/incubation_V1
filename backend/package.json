@@ -1,0 +1,22 @@
+{
+  "name": "seedfund-portfolio-api",
+  "version": "1.0.0",
+  "description": "Node.js Express proxy + normaliser for the Startup India Seed Fund Portfolio API.",
+  "private": true,
+  "type": "commonjs",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "morgan": "^1.10.0"
+  }
+}

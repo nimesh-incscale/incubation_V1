@@ -21,7 +21,7 @@ import EmptyState from "../components/EmptyState";
 
 import useDebounce from "../hooks/useDebounce";
 
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+const API = `${import.meta.env.VITE_BACKEND_URL || ""}/api`;
 const PAGE_SIZE = 12;
 
 const SORTS = [
