@@ -1,0 +1,101 @@
+{
+  "theme": "light",
+  "archetype": "4",
+  "archetype_name": "Swiss & High-Contrast",
+  "emotion_and_vibe": "Authoritative, trustworthy, clear, and high-end. A modern interpretation of government/financial data that feels like a premium SaaS product (e.g., Stripe, Notion).",
+  "colors": {
+    "background": "#F8F9FA",
+    "surface": "#FFFFFF",
+    "surface_glass": "rgba(255, 255, 255, 0.7)",
+    "border": "#E2E8F0",
+    "text_primary": "#0F172A",
+    "text_secondary": "#475569",
+    "primary": "#1E3A8A",
+    "primary_hover": "#1E40AF",
+    "accent_saffron": "#EA580C",
+    "accent_green": "#15803D",
+    "dark_mode_overrides": {
+      "background": "#020617",
+      "surface": "#0F172A",
+      "surface_glass": "rgba(15, 23, 42, 0.7)",
+      "border": "#1E293B",
+      "text_primary": "#F8FAFC",
+      "text_secondary": "#94A3B8",
+      "primary": "#3B82F6",
+      "primary_hover": "#60A5FA",
+      "accent_saffron": "#F97316",
+      "accent_green": "#22C55E"
+    }
+  },
+  "typography": {
+    "font_family_headings": "Chivo",
+    "font_family_body": "IBM Plex Sans",
+    "scale": {
+      "h1": "text-4xl md:text-5xl font-bold tracking-tight",
+      "h2": "text-2xl md:text-3xl font-bold tracking-tight",
+      "h3": "text-xl md:text-2xl font-bold",
+      "h4": "text-lg md:text-xl font-semibold",
+      "body": "text-base leading-relaxed",
+      "small": "text-sm text-secondary",
+      "overline": "text-xs font-semibold uppercase tracking-widest text-secondary"
+    }
+  },
+  "layout_and_spacing": {
+    "philosophy": "Generous spacing. Utilize a fixed sidebar for filters and a fluid grid for the portfolio cards. Every pixel must be utilized intelligently.",
+    "container_padding": "p-4 md:p-8",
+    "grid_system": {
+      "card_grid": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6",
+      "layout_grid": "flex flex-col lg:flex-row gap-8"
+    }
+  },
+  "components": {
+    "sidebar_filters": {
+      "style": "w-full lg:w-72 flex-shrink-0 lg:sticky lg:top-8 lg:max-h-[calc(100vh-4rem)] overflow-y-auto rounded-xl border border-slate-200 bg-white p-6 shadow-sm",
+      "elements": "Range sliders (Shadcn Slider) with dual thumbs if possible or numeric inputs for ranges. Multi-select (Shadcn Command/Popover). Reset button at the bottom."
+    },
+    "portfolio_card": {
+      "style": "group relative flex flex-col justify-between overflow-hidden rounded-xl border border-slate-200/60 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_30px_-10px_rgba(0,0,0,0.1)]",
+      "hover_state": "Subtle scale-up of logo, border color changes to primary-300.",
+      "content_layout": "Top: Avatar/Initials (w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center) + Incubator Name. Middle: Sector (Badge), City/State. Bottom: Total Grant Remaining prominent."
+    },
+    "sticky_header": {
+      "style": "sticky top-0 z-40 w-full backdrop-blur-xl bg-white/80 border-b border-slate-200 py-4 px-6 md:px-8 flex justify-between items-center",
+      "elements": "Global search (Input with icon), total results count, sort dropdown, theme toggle."
+    },
+    "modal_dialog": {
+      "style": "Shadcn Dialog. Max-w-3xl.",
+      "tabs": "Shadcn Tabs: Basic Info, Financial Data, Additional Metadata. Content should be dense and structured, like a control room."
+    },
+    "badges": {
+      "style": "inline-flex items-center rounded-md px-2.5 py-0.5 text-xs font-medium border border-slate-200 bg-slate-50 text-slate-700"
+    }
+  },
+  "motion_and_interactions": {
+    "hover": "Cards lift (-translate-y-1) and cast a diffuse shadow.",
+    "list_entrance": "Framer Motion staggered entrance for grid items (opacity 0 to 1, y: 20 to 0).",
+    "modal_open": "Standard Shadcn scale-in and fade."
+  },
+  "icons_and_assets": {
+    "library": "lucide-react",
+    "usage": "Minimalist stroke icons. Use for search, filter headers, location pins, and empty state.",
+    "empty_state": "Display a large Lucide Database or PackageOpen icon with a muted color, bold title 'No portfolios found', and a clear reset button.",
+    "media_urls": {
+      "hero_background": {
+        "url": "https://images.unsplash.com/photo-1676793894040-b6dd72276620?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzF8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMHRlY2glMjBzdGFydHVwJTIwbG9nb3xlbnwwfHx8fDE3Nzc1MzE0MTN8MA&ixlib=rb-4.1.0&q=85",
+        "category": "background",
+        "description": "Optional subtle background texture for the header or empty state (use with low opacity)"
+      }
+    }
+  },
+  "technical_instructions_to_main_agent": [
+    "Use Lucide-react for all icons.",
+    "Implement infinite scroll using react-intersection-observer or similar pattern.",
+    "The API URL is https://seedfundapi.startupindia.gov.in:3535/api/portfoliofilter. It's a POST request for filtering if applicable, or GET. Check the actual endpoint structure. If CORS fails, mock the data beautifully based on the fields mentioned.",
+    "Global search must filter across incubator_name, sectors, city, state locally if not supported via API directly, or debounced via API.",
+    "Range sliders need minimum and maximum inputs. Consider using Shadcn Dual Slider if you can build it, or two numeric inputs for each range (min/max).",
+    "The empty state must have a reset filters button.",
+    "Ensure all interactive elements have data-testid attributes (e.g., data-testid='incubator-card-1', data-testid='global-search-input').",
+    "Since it's a premium SaaS dashboard, NO generic 'card' component from Shadcn if it feels too boxy; build the card using raw div with Tailwind as per `portfolio_card` guidelines.",
+    "For the modal, use Shadcn Dialog and Tabs."
+  ]
+}
