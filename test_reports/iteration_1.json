@@ -1,0 +1,39 @@
+{
+  "summary": "Full-stack tested Seed Fund Portfolio dashboard (backend proxy + React frontend). Backend: 4/4 pytest cases passed (/api/portfolio returns 193 items; /api/portfolio/facets returns states/cities/incubators/sectors and 4 ranges; /api/portfolio/refresh returns timestamp). Frontend: dashboard loads with sticky header, sidebar filters and card grid (12 initial). Verified global search (Goa -> 5 cards), sort (name_asc shows a-IDEA first), state multi-select (filters to 6 cards), reset, detail modal with all 3 tabs (basic/financial/meta), theme toggle (adds html.dark), empty state for nonsense search, and full infinite scroll loading all 193 cards with 'End of results' marker.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Header counter", "issues": ["Results counter renders without space between number and 'of': '193of 193 incubators'. Add a space (or use flex gap) in the counter component."]},
+      {"screen": "PortfolioCard - Grant Left", "issues": ["Some upstream records have negative totalGrantremainingAmount (e.g. -58,00,000, -1,00,00,000). Card displays raw ₹-5800000 / ₹-10000000 without Lakhs/Crores formatting and using a misleading 'Grant Left' chip. Consider clamping at 0 or formatting as 'Over-allocated' / using the Lakhs/Crores formatter consistently for negatives."]}
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_portfolio_api.py",
+    "/app/test_reports/pytest/portfolio_results.xml"
+  ],
+  "action_items": [
+    "Fix counter spacing in results counter (minor design tweak)",
+    "Decide handling for negative totalGrantremainingAmount values (clamp to 0 or apply INR Lakh/Crore formatter for negatives)"
+  ],
+  "critical_code_review_comments": [
+    "backend/server.py: synchronous requests.post inside async FastAPI route blocks the event loop; consider httpx.AsyncClient or run_in_threadpool, especially since upstream timeout is 20s.",
+    "backend/server.py: in-memory _cache is per-process; fine for single uvicorn worker but stale across replicas. Acceptable for MVP.",
+    "backend/server.py: verify=False against upstream public API is acceptable here (documented), but log a one-time warning on startup.",
+    "Frontend: lib/format.js INR formatter should defensively handle negative amounts so Grant Left negatives render cleanly."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_portfolio_api.py"
+  ],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "test_credentials": "N/A - no auth in app",
+  "seed_data_creation": "None - live upstream data only",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Backend pytest at /app/backend/tests/test_portfolio_api.py covers /api/portfolio, /api/portfolio/facets, /api/portfolio/refresh. Frontend critical flows all functional: search, sort (sort-select), filter-state-trigger multi-select, range sliders, reset (filter-reset-btn / empty-reset-btn), detail-modal with tab-basic/tab-financial/tab-meta, theme-toggle-btn, infinite-sentinel and end-of-list. Only minor cosmetic issues (counter spacing, negative-amount formatting) remain.",
+  "rca of the issue": "N/A - no blocking bugs found"
+}
