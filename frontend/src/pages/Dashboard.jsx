@@ -284,7 +284,7 @@ export default function Dashboard() {
                         <div className="flex items-center gap-2 font-mono text-muted-foreground" data-testid="results-counter">
                             <Sparkles className="h-3.5 w-3.5 text-saffron" />
                             <span className="text-foreground font-semibold">{filteredCount.toLocaleString("en-IN")}</span>
-                            <span>of {totalCount.toLocaleString("en-IN")} incubators</span>
+                            <span>&nbsp;of {totalCount.toLocaleString("en-IN")} incubators</span>
                             {(filters.incubators.length + filters.sectors.length + filters.states.length + filters.cities.length > 0 || debouncedSearch) && (
                                 <button
                                     onClick={resetAll}
