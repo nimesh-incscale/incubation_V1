@@ -5,9 +5,9 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                heading: ["Chivo", "ui-sans-serif", "system-ui", "sans-serif"],
-                body: ["IBM Plex Sans", "ui-sans-serif", "system-ui", "sans-serif"],
-                mono: ["IBM Plex Mono", "ui-monospace", "SFMono-Regular", "monospace"],
+                heading: ["Nunito", "Chivo", "ui-sans-serif", "system-ui", "sans-serif"],
+                body: ["Nunito","IBM Plex Sans", "ui-sans-serif", "system-ui", "sans-serif"],
+                mono: ["Nunito","IBM Plex Mono", "ui-monospace", "SFMono-Regular", "monospace"],
             },
             borderRadius: {
                 lg: "var(--radius)",

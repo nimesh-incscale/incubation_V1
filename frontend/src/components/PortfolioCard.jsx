@@ -38,13 +38,14 @@ export default function PortfolioCard({ item, index = 0, onOpen }) {
                 <div className="absolute inset-0 bg-gradient-to-t from-card/95 via-card/10 to-transparent" />
                 {!!item.evaluation && (
                     <div className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full border border-border bg-background/90 px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider">
-                        <Sparkles className="h-3 w-3 text-saffron" />
-                        {item.evaluation}
+                        {/* <Sparkles className="h-3 w-3 text-saffron" /> */}
+                        Evaluation: 
+                        {item.evaluation}%
                     </div>
                 )}
             </div>
 
-            <div className="flex flex-1 flex-col p-5">
+            <div className="flex flex-1 flex-col p-3">
                 <h3 className="font-heading text-[15px] font-bold leading-snug line-clamp-2" title={item.incubator_name}>
                     {item.incubator_name}
                 </h3>
@@ -58,43 +59,61 @@ export default function PortfolioCard({ item, index = 0, onOpen }) {
                     </span>
                 </div>
 
+                
+
+                <div className="mt-3 mb-4 pt-2 grid grid-cols-1 gap-1">
+                    {/* <div className="flex items-center justify-between rounded-lg border border-border/60 bg-secondary/30 px-1.5 py-1">
+                        <div className="flex items-center gap-1 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+                            <Wallet className="h-3 w-3" /> First approved
+                        </div>
+                        <div className="mt-0 font-heading text-[12px] font-bold tabular-nums">
+                            {formatINR(item.first_total_approved_amt)}
+                        </div>
+                    </div>
+                    <div className="flex items-center justify-between rounded-lg border border-border/60 bg-secondary/30 px-1.5 py-1">
+                        <div className="flex items-center gap-1 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+                            <Wallet className="h-3 w-3" /> Re-apply Approved
+                        </div>
+                        <div className="mt-0 font-heading text-[12px] font-bold tabular-nums">
+                            {formatINR(item.reapply_total_approved_amt)}
+                        </div>
+                    </div> */}
+                    <div className="flex items-center justify-between rounded-lg border border-border/60 bg-secondary/30 px-1.5 py-1">
+                        <div className="flex items-center gap-1 text-[10px] font-mono text-muted-foreground">
+                            <BadgeIndianRupee className="h-3 w-3" /> Total Remaining
+                        </div>
+                        <div className="mt-0 font-heading text-[12px] font-bold tabular-nums">
+                            {formatINR(item.totalRemainingAmount)}
+                        </div>
+                    </div>
+                    <div className="flex items-center justify-between relative rounded-lg border border-saffron/30 bg-saffron/10 px-1.5 py-1">
+                        <div className="flex items-center gap-1 text-[10px] font-mono text-saffron">
+                            <BadgeIndianRupee className="h-3 w-3" /> Grant left
+                        </div>
+                        <div className="mt-0 font-heading text-[12px] font-bold tabular-nums text-foreground">
+                            {formatINR(item.totalGrantremainingAmount)}
+                        </div>
+                    </div>
+                </div>
+                
                 {sectorChips.length > 0 && (
-                    <div className="mt-3 flex flex-wrap gap-1.5">
+                    <div className="mt-auto flex flex-wrap gap-1.5">
                         {sectorChips.map((s) => (
                             <Badge
                                 key={s}
                                 variant="secondary"
-                                className="rounded-md font-normal text-[11px] bg-secondary text-secondary-foreground"
+                                className="rounded-md font-normal text-[10px] bg-secondary text-secondary-foreground"
                             >
                                 {s}
                             </Badge>
                         ))}
                         {moreSectors > 0 && (
-                            <Badge variant="outline" className="rounded-md text-[11px] font-normal">
+                            <Badge variant="outline" className="rounded-md text-[10px] font-normal">
                                 +{moreSectors}
                             </Badge>
                         )}
                     </div>
                 )}
-
-                <div className="mt-auto pt-5 grid grid-cols-2 gap-3">
-                    <div className="rounded-lg border border-border/60 bg-secondary/30 px-3 py-2.5">
-                        <div className="flex items-center gap-1 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
-                            <Wallet className="h-3 w-3" /> Approved
-                        </div>
-                        <div className="mt-1 font-heading text-[15px] font-bold tabular-nums">
-                            {formatINR(item.first_total_approved_amt)}
-                        </div>
-                    </div>
-                    <div className="relative rounded-lg border border-saffron/30 bg-saffron/10 px-3 py-2.5">
-                        <div className="flex items-center gap-1 text-[10px] font-mono uppercase tracking-widest text-saffron">
-                            <BadgeIndianRupee className="h-3 w-3" /> Grant left
-                        </div>
-                        <div className="mt-1 font-heading text-[15px] font-bold tabular-nums text-foreground">
-                            {formatINR(item.totalGrantremainingAmount)}
-                        </div>
-                    </div>
-                </div>
             </div>
         </button>
     );

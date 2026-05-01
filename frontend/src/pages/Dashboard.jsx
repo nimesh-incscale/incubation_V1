@@ -261,7 +261,7 @@ export default function Dashboard() {
                         </Select>
                     </div>
 
-                    <Button
+                    {/* <Button
                         variant="outline"
                         onClick={exportCsv}
                         className="hidden md:inline-flex h-10 gap-2"
@@ -270,7 +270,7 @@ export default function Dashboard() {
                     >
                         <Download className="h-4 w-4" />
                         <span>Export</span>
-                    </Button>
+                    </Button> */}
 
                     {/* Mobile filter trigger */}
                     <Sheet>
@@ -341,7 +341,7 @@ export default function Dashboard() {
             </header>
 
             {/* Hero */}
-            <section className="relative overflow-hidden border-b border-border">
+            {/* <section className="relative overflow-hidden border-b border-border">
                 <div className="absolute inset-0 bg-grid-fade opacity-60" />
                 <div className="relative mx-auto max-w-[1480px] px-4 md:px-8 py-10 md:py-14">
                     <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-[11px] font-mono uppercase tracking-widest text-muted-foreground">
@@ -355,7 +355,7 @@ export default function Dashboard() {
                         sortable, filterable, and ready for your next decision.
                     </p>
                 </div>
-            </section>
+            </section> */}
 
             {/* Body */}
             <main className="mx-auto max-w-[1480px] px-4 md:px-8 py-8">

@@ -3,9 +3,11 @@
 @tailwind utilities;
 
 :root {
-    --font-heading: "Chivo", ui-sans-serif, system-ui, sans-serif;
-    --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+    --font-heading: "Nunito", "Chivo", ui-sans-serif, system-ui, sans-serif;
+    /* --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif; */
+    --font-body: "Nunito", sans-serif;
+    /* --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace; */
+    --font-mono:"Nunito", sans-serif;
 }
 
 html,

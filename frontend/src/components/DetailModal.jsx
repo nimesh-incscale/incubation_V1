@@ -138,14 +138,14 @@ export default function DetailModal({ item, onClose }) {
                                 <KV k="Evaluation Score" v={item.evaluation || "—"} />
                                 <KV k="State" v={item.state || "—"} />
                                 <KV k="City" v={item.city || "—"} />
-                                <KV k="Image URL" v={
+                                {/* <KV k="Image URL" v={
                                     item.image
                                         ? <a href={item.image} target="_blank" rel="noreferrer" className="underline underline-offset-4 break-all">{item.image}</a>
                                         : "—"
-                                } />
+                                } /> */}
                             </div>
                             <div className="flex flex-wrap items-center gap-2 pt-3 text-xs text-muted-foreground">
-                                <Hash className="h-3.5 w-3.5" /> Source · Startup India Seed Fund Public API
+                                <Hash className="h-3.5 w-3.5" /> Source · Startup India Seed Fund
                                 <Building2 className="h-3.5 w-3.5 ml-3" /> Incubator
                             </div>
                         </TabsContent>
