@@ -35,14 +35,16 @@ export default function PortfolioCard({ item, index = 0, onOpen }) {
                         </span>
                     </div>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-card/95 via-card/10 to-transparent" />
-                {!!item.evaluation && (
+                <div className="absolute inset-0 bg-gradient-to-t from-card/95 via-card/10 to-transparent" >
+                {/* {!!item.evaluation && (
                     <div className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full border border-border bg-background/90 px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider">
-                        {/* <Sparkles className="h-3 w-3 text-saffron" /> */}
-                        Evaluation: 
+                        <Sparkles className="h-3 w-3 text-saffron" />
+                        Evaluation:
                         {item.evaluation}%
                     </div>
-                )}
+                )} */}
+                </div>
+
             </div>
 
             <div className="flex flex-1 flex-col p-3">
@@ -59,7 +61,7 @@ export default function PortfolioCard({ item, index = 0, onOpen }) {
                     </span>
                 </div>
 
-                
+
 
                 <div className="mt-3 mb-4 pt-2 grid grid-cols-1 gap-1">
                     {/* <div className="flex items-center justify-between rounded-lg border border-border/60 bg-secondary/30 px-1.5 py-1">
@@ -80,6 +82,14 @@ export default function PortfolioCard({ item, index = 0, onOpen }) {
                     </div> */}
                     <div className="flex items-center justify-between rounded-lg border border-border/60 bg-secondary/30 px-1.5 py-1">
                         <div className="flex items-center gap-1 text-[10px] font-mono text-muted-foreground">
+                            <Sparkles className="h-3 w-3" /> Evaluation Rate
+                        </div>
+                        <div className="mt-0 font-heading text-[12px] font-bold tabular-nums">
+                            {item.evaluation}%
+                        </div>
+                    </div>
+                    <div className="flex items-center justify-between rounded-lg border border-border/60 bg-secondary/30 px-1.5 py-1">
+                        <div className="flex items-center gap-1 text-[10px] font-mono text-muted-foreground">
                             <BadgeIndianRupee className="h-3 w-3" /> Total Remaining
                         </div>
                         <div className="mt-0 font-heading text-[12px] font-bold tabular-nums">
@@ -95,7 +105,7 @@ export default function PortfolioCard({ item, index = 0, onOpen }) {
                         </div>
                     </div>
                 </div>
-                
+
                 {sectorChips.length > 0 && (
                     <div className="mt-auto flex flex-wrap gap-1.5">
                         {sectorChips.map((s) => (

@@ -439,7 +439,8 @@ export default function Dashboard() {
             <footer className="border-t border-border bg-background">
                 <div className="mx-auto max-w-[1480px] px-4 md:px-8 py-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs text-muted-foreground">
                     <div>
-                        Data source ·{" "}
+                        Copyright © 2026 Start-Up Sahay Private Limited. All Rights Reserved | Design and Developed By Start-Up Sahay Private Limited
+                        {/* Data source ·{" "}
                         <a
                             href="https://seedfundscheme.startupindia.gov.in/"
                             target="_blank"
@@ -447,9 +448,9 @@ export default function Dashboard() {
                             className="underline underline-offset-4 hover:text-foreground"
                         >
                             Startup India Seed Fund Scheme
-                        </a>
+                        </a> */}
                     </div>
-                    <div className="font-mono">© {new Date().getFullYear()} · Built for the ecosystem</div>
+                    {/* <div className="font-mono">© {new Date().getFullYear()} · Built for the ecosystem</div> */}
                 </div>
             </footer>
 
