@@ -13,7 +13,7 @@ import path from "path";
  */
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), "");
-    const proxyTarget = env.VITE_PROXY_TARGET || "http://localhost:8001";
+    const proxyTarget = env.VITE_PROXY_TARGET || "http://localhost:5000";
 
     return {
         plugins: [react()],
@@ -24,7 +24,7 @@ export default defineConfig(({ mode }) => {
         },
         server: {
             host: "0.0.0.0",
-            port: 5000,
+            port: 3000,
             strictPort: true,
             // Allow Emergent preview hostname (and any reverse-proxy host).
             allowedHosts: true,
@@ -35,6 +35,9 @@ export default defineConfig(({ mode }) => {
                     target: proxyTarget,
                     changeOrigin: true,
                     secure: false,
+                    // target: "http://localhost:5000", // Point to the backend port
+                    // changeOrigin: true,
+                    // secure: false,
                 },
             },
             watch: {
