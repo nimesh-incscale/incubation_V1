@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import Dashboard from "@/pages/Dashboard";
 import { Toaster } from "@/components/ui/sonner";
 
+
 function App() {
     return (
         <ThemeProvider>
