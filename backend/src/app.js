@@ -5,6 +5,7 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const portfolioRoutes = require("./routes/portfolio");
+const { requireApiKey } = require("./middleware/auth"); 
 
 function createApp({ corsOrigins = ["*"] } = {}) {
     const app = express();
@@ -18,6 +19,7 @@ function createApp({ corsOrigins = ["*"] } = {}) {
         })
     );
 
+    app.use("/api", requireApiKey); 
     app.use("/api", portfolioRoutes);
     app.use("/api", (_req, res) => res.status(404).json({ detail: "Not found" }));
 

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
-import axios from "axios";
+//import axios from "axios";
+import api from "../lib/api";
 import { useSearchParams } from "react-router-dom";
 import { Search, SlidersHorizontal, ArrowDownAZ, RotateCcw, Database, Sparkles, Building2, Download } from "lucide-react";
 import { Button } from "../components/ui/button";
@@ -25,7 +26,7 @@ import { downloadCsv } from "../lib/csv";
 import { filtersToParams, paramsToFilters } from "../lib/urlState";
 import { toast } from "sonner";
 
-const API = `${import.meta.env.VITE_BACKEND_URL || ""}/api`;
+//const API = `${import.meta.env.VITE_BACKEND_URL || ""}/api`;
 const PAGE_SIZE = 12;
 
 const SORTS = [
@@ -67,10 +68,14 @@ export default function Dashboard() {
         (async () => {
             try {
                 setLoading(true);
+                // const [p, f] = await Promise.all([
+                //     axios.get(`${API}/portfolio`),
+                //     axios.get(`${API}/portfolio/facets`),
+                // ]);
                 const [p, f] = await Promise.all([
-                    axios.get(`${API}/portfolio`),
-                    axios.get(`${API}/portfolio/facets`),
-                ]);
+                    api.get("/portfolio"),
+                    api.get("/portfolio/facets"),
+                ]); 
                 if (!mounted) return;
                 setItems(p.data?.data || []);
                 setFacets(f.data);
